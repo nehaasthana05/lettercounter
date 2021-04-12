@@ -1,25 +1,24 @@
-/*******************************************************************************
-* 
-* Purpose: Assignment #3 solution.
-*
-* Author: Kevin Browne
-*
-*******************************************************************************/
+
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 
+#define BUFFER_SIZE 1024
 #define COUNT_SIZE 26
+
+int max(int count[]);
+int min(int count[]);
 
 int main()
 {
-  char buffer[1024], input, curchar;
+  char buffer[BUFFER_SIZE], input, curchar;
   int i = 0, count[COUNT_SIZE];
+  int spaces=0;
   int other = 0;
 
   // request and read in the string from the user
   printf("Enter text for analysis: ");
-  while ( (input = getchar()) != '\n' ) {
+  while ( ((input = getchar()) != '\n' ) && (i<(BUFFER_SIZE -1))) {
     buffer[i++] = input;
   }
   buffer[i] = '\0';
@@ -53,23 +52,12 @@ int main()
                               other,
                               (((float) count[i]) / strlen(buffer)) * 100);
 
+  printf("\nTota spaces: %d\n",spaces);
+
   // Find the max and min occuring character in the string, in particular the
   // position in the count array of each character
-  int max, min, max_pos, min_pos;
-  max = min = count[0];
-  min_pos = max_pos = 0;
-  for (i = 0; i < COUNT_SIZE; i++) {
-    if (count[i] < min)
-    {
-      min_pos = i;
-      min = count[i];
-    }
-    if (count[i] > max)
-    {
-      max_pos = i;
-      max = count[i];
-    }
-  }
+  int max_pos= max(count);
+  int min_pos= min(count);
 
   // Output the max and min occuring letter, again using 65 as an offset to
   // output the character character given ASCII A-Z range from 65-90
@@ -78,3 +66,32 @@ int main()
 
   return 0;
 }
+//Returns position of array count of associated letter that occured the max number of times
+int max(int count[])
+{
+  int max=count[0];
+  int max_pos=0;
+  for (int i = 0; i < COUNT_SIZE; i++) {
+    if (count[i] > max)
+    {
+      max_pos = i;
+      max = count[i];
+    }
+  }
+  return max_pos;
+}
+//returns the position in array count of the associated letter that ocurred the minimum number of times
+int min(int count[])
+{
+  int min= count[0];
+  int min_pos=0;
+  for ( int i=0;i<26;i++){
+  if (count[i]<min)
+  {
+    min_pos=i;
+    min=count[i];
+    }
+  }
+  return min_pos;
+}
+
