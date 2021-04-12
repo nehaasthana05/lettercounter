@@ -1,4 +1,10 @@
-
+/*******************************************************************************
+* 
+* Purpose: Assignment #3 solution.
+*
+* Author: Kevin Browne
+*
+*******************************************************************************/
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -93,5 +99,5 @@ int min(int count[])
     }
   }
   return min_pos;
-}
+  }
 
